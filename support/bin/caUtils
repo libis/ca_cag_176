@@ -31,6 +31,11 @@
  * ----------------------------------------------------------------------
  */
 
+    $home_directory = '/libis/CA/production/collectiveaccess/ca_cag_17';
+    $_SERVER['SCRIPT_FILENAME'] = $home_directory .'/index.php';
+    putenv('COLLECTIVEACCESS_HOME='. $home_directory);
+    $AUTH_CURRENT_USER_ID = 'administrator';
+	
 	if (!_caUtilsLoadSetupPHP()) {
 		die("Could not find your CollectiveAccess setup.php file! Please set the COLLECTIVEACCESS_HOME environment variable to the location of your CollectiveAccess installation, or run this command from a sub-directory of your CollectiveAccess installation.\n");
 	}
