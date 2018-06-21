@@ -40,6 +40,7 @@
  * ----------------------------------------------------------------------
  */
  
+	require_once(__CA_APP_DIR__."/helpers/imageHelpers.php");
  	$t_item = $this->getVar('t_subject');
 	
 	$va_bundle_displays = $this->getVar('bundle_displays');
@@ -57,7 +58,12 @@
 	<div class="representationList">
 		
 <?php
+	$imagePids = getImagePids($t_item->get('imageUrl', array('returnAsArray' => true)));
+	$vs_buf = "";
 	$va_reps = $t_item->getRepresentations(array("thumbnail", "medium"));
+	if (sizeof($va_reps) > 0 || sizeof($imagePids) > 0) {	//LIBIS
+		$vs_buf .= getImageThumbnailBase($imagePids[0]);
+		if(!empty($va_reps)) {
 
 	foreach($va_reps as $va_rep) {
 		if(sizeof($va_reps) > 1){
@@ -68,6 +74,11 @@
 			# --- one rep - show medium rep
 			print $va_rep['tags']['medium']."\n";
 		}
+			}
+		} else {
+			$vs_buf .= "&nbsp;";
+		}
+		print $vs_buf;
 	}
 ?>
 	</div>
@@ -85,4 +96,34 @@
 		print '<div class="data"><span class="label">'."{$va_bundle_info['display']} </span><span class='meta'> {$vs_display_value}</span></div>\n";
 	}
 	
+	#libis start
+		$vs_buf = "";
+		#$pids = getImagePids($t_item->get('imageUrl', array('returnAsArray' => true)));
+		$pids = $imagePids;
+		array_shift($pids);
+		$pids = array_reverse($pids);
+		$totalDivs = ceil(sizeof($pids)/3);
+		if($totalDivs > 0){
+			for($x = 0; $x<$totalDivs; $x++){?>
+				<div class='odd'>
+					<?php
+						for($y=0; $y < 3; $y++) {
+							$pid = array_pop($pids);
+							if(empty($pid))
+								continue;
+							?>
+							<div class="image">
+								<?php
+								$vs_buf = "";
+								$vs_buf .= getImageThumbnailBase($pid);
+								print $vs_buf;
+								?>
+							</div>
+							<?php
+						}
+						?>
+				</div>
+			<?php }
+		}
+	# libis end-->
 	print $this->render("pdfEnd.php");

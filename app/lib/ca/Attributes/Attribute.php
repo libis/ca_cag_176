@@ -36,6 +36,7 @@
  	
 require_once(__CA_LIB_DIR__.'/ca/Attributes/Values/ContainerAttributeValue.php');
 require_once(__CA_LIB_DIR__.'/ca/Attributes/Values/TextAttributeValue.php');
+require_once(__CA_LIB_DIR__.'/ca/Attributes/Values/ImageUrlAttributeValue.php');
 require_once(__CA_LIB_DIR__.'/ca/Attributes/Values/DateRangeAttributeValue.php');
 require_once(__CA_LIB_DIR__.'/ca/Attributes/Values/ListAttributeValue.php');
 require_once(__CA_LIB_DIR__.'/ca/Attributes/Values/GeocodeAttributeValue.php');

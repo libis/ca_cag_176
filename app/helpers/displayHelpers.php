@@ -38,6 +38,7 @@ require_once(__CA_LIB_DIR__.'/core/Datamodel.php');
 require_once(__CA_LIB_DIR__.'/core/Configuration.php');
 require_once(__CA_LIB_DIR__.'/core/Parsers/TimeExpressionParser.php');
 require_once(__CA_LIB_DIR__.'/core/Parsers/ExpressionParser.php');
+require_once(__CA_APP_DIR__."/helpers/imageHelpers.php");
 require_once(__CA_LIB_DIR__."/ca/ApplicationPluginManager.php");
 require_once(__CA_LIB_DIR__.'/core/Parsers/DisplayTemplateParser.php');
 require_once(__CA_LIB_DIR__.'/core/Media/MediaInfoCoder.php');
@@ -983,12 +984,22 @@ require_once(__CA_LIB_DIR__.'/core/Media/MediaInfoCoder.php');
 		// -------------------------------------------------------------------------------------
 	
 		if($t_item->getPrimaryKey()) {
-			if (sizeof($va_reps) > 0) {	
+			$imagePids = getImagePids($t_item->get('imageUrl', array('returnAsArray' => true))); //LIBIS
+			if (sizeof($va_reps) > 0 || sizeof($imagePids) > 0) {	
 				$va_imgs = array();
-				
-				$vs_buf .= "<div id='inspectorMedia'>";
+				$vs_buf .= "<div class='button' style='text-align:right;'><a href='#' id='inspectorShowMedia'>"._t("Show media")."</a> </div>
+					<div id='inspectorMedia' style='background-color:#f9f9f9; border: 1px solid #eee; margin:3px 0px -3px 0px;'>";
 			
 				$vn_r = $vn_primary_index = 0;
+                //libis_start
+                if (isset($imagePids) && (is_array($imagePids)) && (sizeof($imagePids) > 0)) {
+                    foreach ($imagePids as $imagePid) {
+                        $imageThumbnail = getImageThumbnailUrl($imagePid);
+                        $imageFull = getImageViewMainUrl($imagePid) . '" target="_blank';
+                        array_push($va_imgs, "{url:'".$imageThumbnail."', link: '" . $imageFull . "'}");
+                        //array_push($va_imgs, "{url:'".$imageThumbnail."', height:'auto', width: 'auto', link: '" . $imageFull . "'}");
+                    }
+                }elseif(!empty($va_reps)){   #show image representation if image image does not exist
 				foreach($va_reps as $va_rep) {
 					if (!($va_rep['info']['preview170']['WIDTH'] && $va_rep['info']['preview170']['HEIGHT'])) { continue; }
 				
@@ -1010,6 +1021,8 @@ require_once(__CA_LIB_DIR__.'/core/Media/MediaInfoCoder.php');
 					</div>
 		";
 					}
+                }
+                //libis_end
 									
 				if (sizeof($va_imgs) > 0) {
 					$vs_buf .= "
@@ -1019,7 +1032,7 @@ require_once(__CA_LIB_DIR__.'/core/Media/MediaInfoCoder.php');
 					</div>
 				</div>
 		";
-					if (sizeof($va_reps) > 1) {
+					if (sizeof($va_reps) > 1 || sizeof($imagePids) > 1) {	//LIBIS
 						$vs_buf .= "
 					<div class='rightScroll'>
 						<a href='#' onclick='inspectorInfoRepScroller.scrollToNextImage(); return false;'>".caNavIcon(__CA_NAV_ICON_SCROLL_RT__, '16px')."</a>
@@ -1760,7 +1773,7 @@ require_once(__CA_LIB_DIR__.'/core/Media/MediaInfoCoder.php');
 		";
 				}
 	
-				if (sizeof($va_reps)) {
+				if (sizeof($va_reps) >0 || sizeof($imagePids) > 0) { //LIBIS
 					$vs_buf .= "
 		if (inspectorCookieJar.get('inspectorShowMediaIsOpen') == undefined) {		// default is to have media open
 			inspectorCookieJar.set('inspectorShowMediaIsOpen', 1);

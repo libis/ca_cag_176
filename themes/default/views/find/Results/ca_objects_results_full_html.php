@@ -25,6 +25,7 @@
  *
  * ----------------------------------------------------------------------
  */
+    require_once(__CA_APP_DIR__."/helpers/imageHelpers.php");
  
 	$t_display				= $this->getVar('t_display');
 	$va_display_list 		= $this->getVar('display_list');
@@ -46,15 +47,25 @@
 		# --- get the height of the image so can calculate padding needed to center vertically
 		$va_media_info = $vo_result->getMediaInfo('ca_object_representations.media', 'small');
 		$vn_padding_top = 0;
-		$vn_padding_top_bottom =  ((250 - $va_media_info["HEIGHT"]) / 2);
+		$vn_padding_top_bottom =  ((5 - $va_media_info["HEIGHT"]) / 2); // libis
 		
 		print "<div class='objectFullImageContainer' style='padding: ".$vn_padding_top_bottom."px 0px ".$vn_padding_top_bottom."px 0px;'>";
 ?>
 			<input type='checkbox' name='add_to_set_ids' value='<?php print (int)$vn_object_id; ?>' class="addItemToSetControl addItemToSetControlInThumbnails" />
 <?php
-		$va_tmp = $vo_result->getMediaTags('ca_object_representations.media', 'small');
+        // toegevoegd door Sam, anders wordt enkel de laatst afbeelding opgehaald. we hebben de eerste nodig
+        require_once(__CA_MODELS_DIR__.'/ca_objects.php');
+        $t_object = new ca_objects();
+        $t_object->load($vn_object_id);
+        $imagePids = getImagePids($t_object->get('imageUrl', array('returnAsArray' => true)));
+        if (sizeof($imagePids) > 0) {
+            $media_representation .= getImageThumbnailLink($imagePids[0]);
+        }
+		#$va_tmp = $vo_result->getMediaTags('ca_object_representations.media', 'small');
+        $va_tmp = array();
 		print caEditorLink($this->request, array_shift($va_tmp), '', 'ca_objects', $vn_object_id, array(), array('onmouseover' => 'jQuery(".qlButtonContainerFull").css("display", "none"); jQuery("#ql_'.$vn_object_id.'").css("display", "block");', 'onmouseout' => 'jQuery(".qlButtonContainerFull").css("display", "none");'));
-		print "<div class='qlButtonContainerFull' id='ql_".$vn_object_id."' onmouseover='jQuery(\"#ql_".$vn_object_id."\").css(\"display\", \"block\");'><a class='qlButton' onclick='caMediaPanel.showPanel(\"".caNavUrl($this->request, 'find', 'SearchObjects', 'QuickLook', array('object_id' => $vn_object_id))."\"); return false;' >"._t("Quick Look")."</a></div>";
+        print $media_representation;
+		//print "<div class='qlButtonContainerFull' id='ql_".$vn_object_id."' onmouseover='jQuery(\"#ql_".$vn_object_id."\").css(\"display\", \"block\");'><a class='qlButton' onclick='caMediaPanel.showPanel(\"".caNavUrl($this->request, 'find', 'SearchObjects', 'QuickLook', array('object_id' => $vn_object_id))."\"); return false;' >"._t("Quick Look")."</a></div>";
 		
 		print "</div>";
 		print "<div class='objectFullText'>";
@@ -77,6 +88,8 @@
 		if ($vn_item_count < $vn_items_per_page) {
 			print "<br/><div class='divide'><!-- empty --></div>";
 		}
+        //toegevoegd door libis, anders komen alle afbeeldingen bij elkaar
+        $media_representation = "";
 	}
 ?>
 </form>
