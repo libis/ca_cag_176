@@ -2507,6 +2507,7 @@ select.searchToolsSelect {
 	text-align: left;
 	font-size: 13px;
 	line-height: 1.7em;
+	overflow: auto; /*libis: prevent text beneath image on search result page. */
 }
 .objectFullText .formLabel {
 	font-family: 'DIN-Regular', Helvetica, sans-serif;

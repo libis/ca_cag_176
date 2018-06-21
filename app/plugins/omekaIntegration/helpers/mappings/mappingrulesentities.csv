@@ -1,0 +1,23 @@
+COPY,ca_entities.preferred_labels,items::dc:title
+COPY,ca_entities.preferred_labels,items::collectie:Naam instelling
+COPY,ca_entities.opmerkingEntities,items::collectie:Beschrijving
+COPY,straat,items::collectie:Straat + Nr
+COPY,postalcode,items::collectie:Postcode
+COPY,city,items::collectie:Stad
+COPY,stateprovince,items::collectie:Provincie
+COPY,country,items::collectie:Land
+COPY,adresopmerking,items::collectie:Opmerking
+COPY,adrestelefoon,items::collectie:Telefoon
+COPY,adresemail,items::collectie:E-mail
+COPY,adreswebsite,items::collectie:Website
+COPY,ca_entities.organisatieType,items::collectie:Type Organisatie
+SPLITTOONE,ca_entities.erfgoeddragersinfo,;,items::collectie:Soort erfgoed
+SPLITTOONE,ca_entities.werkveldInfo,;,items::collectie:collectiefocus
+COPY,ca_entities.entity_id,items::collectie:entity id
+COPY,ca_entities.digitoolUrl,items::collectie:digitoolurl
+COPY,ca_entities.georeference,items::geolocation:address
+PUT,true,items::featured
+PUT,true,collection::featured
+PUT,true,items::public
+PUT,"collectie",items::item_type
+PUT,"items",Resource
