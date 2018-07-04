@@ -58,7 +58,7 @@
 	<div class="representationList">
 		
 <?php
-	$imagePids = getImagePids($t_item->get('imageUrl', array('returnAsArray' => true)));
+/*	$imagePids = getImagePids($t_item->get('imageUrl', array('returnAsArray' => true)));
 	$vs_buf = "";
 	$va_reps = $t_item->getRepresentations(array("thumbnail", "medium"));
 	if (sizeof($va_reps) > 0 || sizeof($imagePids) > 0) {	//LIBIS
@@ -79,7 +79,7 @@
 			$vs_buf .= "&nbsp;";
 		}
 		print $vs_buf;
-	}
+	}*/
 ?>
 	</div>
 		
