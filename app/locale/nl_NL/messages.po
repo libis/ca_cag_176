@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: CollectiveAccess Providence\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-27 14:04-0400\n"
-"PO-Revision-Date: 2017-04-27 14:04-0400\n"
+"PO-Revision-Date: 2018-07-04 11:06+0200\n"
 "Last-Translator: Seth <Seth@collectiveacess.org>\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/"
 "collectiveaccess/collectiveaccess-providence/language/nl_NL/)\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.12\n"
+"X-Generator: Poedit 2.0.5\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-KeywordsList: _t;_p;_\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -30893,7 +30893,7 @@ msgstr "Beheren"
 
 #: app/conf/navigation.conf:3048
 msgid "My preferences"
-msgstr ""
+msgstr "Mijn voorkeuren"
 
 #: app/conf/navigation.conf:3063 app/conf/user_pref_defs.conf:14
 msgid "Editing"
@@ -30929,15 +30929,15 @@ msgstr "Gebruikersprofiel"
 
 #: app/conf/navigation.conf:3329
 msgid "My watched items"
-msgstr ""
+msgstr "Mijn gevolgde items"
 
 #: app/conf/navigation.conf:3349
 msgid "My project teams"
-msgstr ""
+msgstr "Mijn projectteams"
 
 #: app/conf/navigation.conf:3356
 msgid "My displays"
-msgstr ""
+msgstr "Mijn weergaves"
 
 #: app/conf/navigation.conf:3366
 msgid "Edit display"
@@ -30945,7 +30945,7 @@ msgstr ""
 
 #: app/conf/navigation.conf:3398 app/conf/navigation.conf:3410
 msgid "My sets"
-msgstr ""
+msgstr "Mijn sets"
 
 #: app/conf/navigation.conf:3455
 msgid "Edit set"
@@ -30957,7 +30957,7 @@ msgstr ""
 
 #: app/conf/navigation.conf:3521
 msgid "My search tools"
-msgstr ""
+msgstr "Zoekmogelijkheden"
 
 #: app/conf/navigation.conf:3532
 msgid "Search forms"
@@ -30981,7 +30981,7 @@ msgstr ""
 
 #: app/conf/navigation.conf:3649
 msgid "Lists & vocabularies"
-msgstr ""
+msgstr "(Woorden)lijsten"
 
 #: app/conf/navigation.conf:3679
 msgid "Edit list"
@@ -30993,7 +30993,7 @@ msgstr ""
 
 #: app/conf/navigation.conf:3809
 msgid "Exporters"
-msgstr ""
+msgstr "Exporteren"
 
 #: app/conf/navigation.conf:3816
 msgid "Exporter list"
@@ -31001,7 +31001,7 @@ msgstr ""
 
 #: app/conf/navigation.conf:3825
 msgid "Access control"
-msgstr ""
+msgstr "Toegangsregels"
 
 #: app/conf/navigation.conf:3832
 msgid "User logins"
@@ -31057,7 +31057,7 @@ msgstr ""
 
 #: app/conf/navigation.conf:4000
 msgid "Administration"
-msgstr ""
+msgstr "Systeembeheer"
 
 #: app/conf/navigation.conf:4013
 msgid "User interfaces"
