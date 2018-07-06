@@ -33,7 +33,7 @@
  /**
   *
   */
-    define("__CA_ATTRIBUTE_VALUE_IMAGEURL__", 31);
+    define("__CA_ATTRIBUTE_VALUE_IMAGEURL__", 32);
 
  	require_once(__CA_LIB_DIR__.'/ca/Attributes/Values/IAttributeValue.php');
  	require_once(__CA_LIB_DIR__.'/ca/Attributes/Values/AttributeValue.php');
