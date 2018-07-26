@@ -26,9 +26,9 @@
  * -=-=-=-=-=- CUT HERE -=-=-=-=-=-
  * Template configuration:
  *
- * @name PDF (checklist)
+ * @name PDF (CAG)
  * @type page
- * @pageSize letter
+ * @pageSize a4
  * @pageOrientation portrait
  * @tables ca_objects
  *
@@ -39,6 +39,8 @@
  *
  * ----------------------------------------------------------------------
  */
+
+    require_once(__CA_APP_DIR__."/helpers/imageHelpers.php");
 
 	$t_display				= $this->getVar('t_display');
 	$va_display_list 		= $this->getVar('display_list');
@@ -53,8 +55,12 @@
 	$vn_start 				= 0;
 
 	print $this->render("pdfStart.php");
-	print $this->render("header.php");
-	print $this->render("footer.php");
+    	//libis_start
+    	// in order to use header on each page with wkhtmltopdf tool, we need to provide a separate header html file, in app/lib/ca/BaseFindController.php.
+	if($this->getVar('PDFRenderer') != "wkhtmltopdf")
+        	print $this->render("header.php");
+	    //libis_end
+	//print $this->render("footer.php"); /*Footer will be added by wkthmltopdf tool in pdf worker*/
 ?>
 		<div id='body'>
 <?php
@@ -68,21 +74,24 @@
 			<div class="row">
 			<table>
 			<tr>
-				<td>
-<?php 
-					if ($vs_path = $vo_result->getMediaPath('ca_object_representations.media', 'thumbnail')) {
-						print "<div class=\"imageTiny\"><img src='{$vs_path}'/></div>";
-					} else {
-?>
-						<div class="imageTinyPlaceholder">&nbsp;</div>
-<?php					
-					}	
-?>								
-
-				</td><td>
+                <td>
+                    <?php
+                    require_once(__CA_MODELS_DIR__.'/ca_objects.php');
+                    $t_object = new ca_objects();
+                    $t_object->load($vn_object_id);
+                    $imagePids = getImagePids($t_object->get('imageUrl', array('returnAsArray' => true)));
+                    if (isset($imagePids) && sizeof($imagePids) > 0){
+                        $vs_path = getImageThumbnailUrl($imagePids[0]);
+                        print '<div><img width:"150px" height="150px" src="data:image/jpeg;base64,'.base64_encode(file_get_contents($vs_path)).'"></div>';
+                    }
+                    else
+                        print "<div class=\"imageTinyPlaceholder\">no image</div>";
+                    ?>
+                </td>
+                <td width="70%">
 					<div class="metaBlock">
 <?php				
-					print "<div class='title'>".$vo_result->getWithTemplate('^ca_objects.preferred_labels.name (^ca_objects.idno)')."</div>"; 
+					print "<div class='title'>".$vo_result->getWithTemplate('^ca_objects.preferred_labels.name')."</div>"; 
 					foreach($va_display_list as $vn_placement_id => $va_display_item) {
 						if (!strlen($vs_display_value = $t_display->getDisplayValue($vo_result, $vn_placement_id, array('forReport' => true, 'purify' => true)))) {
 							if (!(bool)$t_display->getSetting('show_empty_values')) { continue; }

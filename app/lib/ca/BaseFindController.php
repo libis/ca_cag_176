@@ -44,8 +44,13 @@
  	require_once(__CA_LIB_DIR__.'/core/Print/PDFRenderer.php');
 	require_once(__CA_MODELS_DIR__.'/ca_data_exporters.php');
  	require_once(__CA_LIB_DIR__."/ca/ApplicationPluginManager.php");
- 	
-	class BaseFindController extends ActionController {
+
+
+    require_once __CA_BASE_DIR__. '/support/rabbitmq/vendor/autoload.php';
+
+    use PhpAmqpLib\Connection\AMQPConnection;
+    use PhpAmqpLib\Message\AMQPMessage;
+class BaseFindController extends ActionController {
 		# ------------------------------------------------------------------
 		protected $opo_datamodel;
 		protected $opo_result_context;
@@ -573,7 +578,26 @@
 					
 					$o_pdf->setPage(caGetOption('pageSize', $va_template_info, 'letter'), caGetOption('pageOrientation', $va_template_info, 'portrait'), caGetOption('marginTop', $va_template_info, '0mm'), caGetOption('marginRight', $va_template_info, '0mm'), caGetOption('marginBottom', $va_template_info, '0mm'), caGetOption('marginLeft', $va_template_info, '0mm'));
 					
-					$o_pdf->render($vs_content, array('stream'=> true, 'filename' => ($vs_filename = $this->view->getVar('filename')) ? $vs_filename : caGetOption('filename', $va_template_info, 'export_results.pdf')));
+					//$o_pdf->render($vs_content, array('stream'=> true, 'filename' => ($vs_filename = $this->view->getVar('filename')) ? $vs_filename : caGetOption('filename', $va_template_info, 'export_results.pdf')));
+                    //libis_start
+                    /* Pdf printing via rabbitmq queuing server*/
+                    $va_settings = $this->getConfigurations('pdf_result');
+                    /*
+                           If use_queuing_server configuration is set to 1 print it via rabbitmq otherwise via default
+                           collective access pdf rendering tool.
+                    */
+                    if($this->isQueuingServer($va_settings) === true){
+                        $vs_header = $this->render("header.php");
+                        $va_pdf_options = null;
+                        $va_pdf_options['m_top'] = '30mm';
+                        $va_pdf_options['m_bottom'] = '20mm';
+                        $va_pdf_options['footer'] = str_pad(date('d/m/Y'), 40).$ps_output_filename;
+                        $this->queuingRequest($vs_content, $vs_header, $va_settings, $va_pdf_options);
+                        header('Location: ' . $_SERVER['HTTP_REFERER']);
+                    }
+                    else
+                        $o_pdf->render($vs_content, array('stream'=> true, 'filename' => ($vs_filename = $this->view->getVar('filename')) ? $vs_filename : caGetOption('filename', $va_template_info, 'export_results.pdf')));
+                    //libis_end
 					exit;
 				} catch (Exception $e) {
 					die($e->getMessage());
@@ -1128,4 +1152,72 @@
 			}
  		}
  		# ------------------------------------------------------------------
+        //libis_start
+        /* Following function are used to make rabbitmq request. */
+        /**
+         * Sends request to queuing server specified in find_results_download.conf file
+         *
+         */
+        public function queuingRequest($vs_content, $vs_header, $va_settings, $va_pdf_options) {
+
+            $connection = new AMQPConnection($va_settings['queuing_server_address'],
+                $va_settings['queuing_server_port'], $va_settings['queuing_server_id'],
+                $va_settings['queuing_server_password'], $va_settings['queuing_server_vhost']);
+
+            $channel = $connection->channel();
+            $channel->queue_declare($va_settings['queuing_pdf_queue'], false, false, false, false);
+            $user = $this->request->getUser();
+
+            $msg_body = array(
+                'pdf_contents' => $vs_content,
+                'pdf_header' => $vs_header,
+                'pdf_settings' => $va_pdf_options,
+                'user_info' => array('name' => $user->getName(), 'email' => $user->get('email'))
+            );
+
+            file_put_contents(__CA_BASE_DIR__."/tmp/content.html",print_r($vs_content, true));
+            file_put_contents(__CA_BASE_DIR__."/tmp/header.html",print_r($vs_header, true));
+
+            $msg = new AMQPMessage(json_encode($msg_body));
+            $channel->basic_publish($msg, '', $va_settings['queuing_pdf_queue']);
+
+            $this->notification->addNotification(_t("Opdracht werd verstuurd, u zal een email ontvangen met het bestand.", __NOTIFICATION_TYPE_INFO__));
+
+            $channel->close();
+            $connection->close();
+        }
+        # ------------------------------------------------------------------
+        /**
+         * Check if queuing server information is correct
+         *
+         */
+        public function isQueuingServer($va_settings) {
+
+            if(isset($va_settings['use_queuing_server'], $va_settings['queuing_server_address'],
+                    $va_settings['queuing_server_port'], $va_settings['queuing_server_id'],
+                    $va_settings['queuing_server_password'], $va_settings['queuing_server_vhost'],
+                    $va_settings['queuing_pdf_queue']) && $va_settings['use_queuing_server'] == 1)
+                return true;
+            else
+                return false;
+        }
+        # -------------------------------------------------------
+        /**
+         * Returns the settings for the pdf print
+         */
+        public function getConfigurations($vs_conf_id) {
+            $conf_file_path = __CA_BASE_DIR__."/app/conf/local/pdf_print.conf";
+            $conf_sections = Configuration::load($conf_file_path);
+            if (is_array($va_sections = $conf_sections->getAssocKeys())) {
+                foreach($va_sections as $vs_section_id) {
+                    if($vs_section_id === $vs_conf_id ) {
+                        if(is_array($va_confs = $conf_sections->getAssoc($vs_section_id))) {
+                            return $va_confs;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+        //libis_end
 	}
