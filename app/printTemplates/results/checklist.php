@@ -84,7 +84,7 @@
 						print '<div style="width: 150px; height: 150px; overflow: hidden">'.$vs_base_image.'</div>';
                     }
                     else
-                        print "<div class=\"imageTinyPlaceholder\">no image</div>";
+                        print "<div class=\"imageTinyPlaceholder\">&nbsp;</div>";
                     ?>
                 </td>
                 <td width="70%">
