@@ -57,7 +57,7 @@
 			while($try < 10)
 			{
 				if (!$vo_http_response->isError()){
-					return '<img src="data:image/jpeg;base64,'.base64_encode($thumb).'">';
+					return '<img width:"150px" height="150px" src="data:image/jpeg;base64,'.base64_encode($thumb).'">';
 					break;
 				} else {
                    //retry
@@ -66,7 +66,7 @@
                    $vo_http_response = $vo_http_client->request();
 
                    if (!$vo_http_response->isError()){
-                        return '<img src="data:image/jpeg;base64,'.base64_encode($thumb).'">';
+                         return '<img width:"150px" height="150px" src="data:image/jpeg;base64,'.base64_encode($thumb).'">';
                    } else {
                        $try++;
                     }
@@ -95,7 +95,8 @@
 	{
 		if (strlen($imagePid) > 0) {
 
-            $imageUrl = "http://resolver.libis.be/".$imagePid."?quality=CRITICAL_ARCHIVE";
+		        //$imageUrl = "http://resolver.libis.be/".$imagePid."?quality=CRITICAL_ARCHIVE";
+			$imageUrl = "http://resolver.libis.be/".$imagePid."/thumbnail";
 			
 			return $imageUrl;
 		}

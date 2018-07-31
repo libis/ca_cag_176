@@ -64,7 +64,6 @@
 ?>
 		<div id='body'>
 <?php
-
 		$vo_result->seek(0);
 		
 		$vn_line_count = 0;
@@ -81,8 +80,8 @@
                     $t_object->load($vn_object_id);
                     $imagePids = getImagePids($t_object->get('imageUrl', array('returnAsArray' => true)));
                     if (isset($imagePids) && sizeof($imagePids) > 0){
-                        $vs_path = getImageThumbnailUrl($imagePids[0]);
-                        print '<div><img width:"150px" height="150px" src="data:image/jpeg;base64,'.base64_encode(file_get_contents($vs_path)).'"></div>';
+                        $vs_base_image = getImageThumbnailBase($imagePids[0]);
+						print '<div style="width: 150px; height: 150px; overflow: hidden">'.$vs_base_image.'</div>';
                     }
                     else
                         print "<div class=\"imageTinyPlaceholder\">no image</div>";
