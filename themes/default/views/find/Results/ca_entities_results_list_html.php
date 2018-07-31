@@ -92,12 +92,12 @@
 				<tr <?php print ($i ==1) ? "class='odd'" : ""; ?>>
 					<td class="addItemToSetControl">
 						<input type='checkbox' name='add_to_set_ids' value='<?php print (int)$vn_entity_id; ?>' class="addItemToSetControl" />
-						<div><?php print $vn_start + $vn_item_count + 1; ?></div>
 					</td>
+					<td style='vertical-align: top'><?php print $vn_start + $vn_item_count + 1; ?></td>
 <?php
-					print "<td style='width:5%;'>".caEditorLink($this->request, caNavIcon(__CA_NAV_ICON_EDIT__, 2), '', 'ca_entities', $vn_entity_id, array())."</td>";
+					print "<td style='width:5%; vertical-align: top'>".caEditorLink($this->request, caNavIcon(__CA_NAV_ICON_EDIT__, 2), '', 'ca_entities', $vn_entity_id, array())."</td>";
 					foreach($va_display_list as $vn_placement_id => $va_info) {
-						print "<td>".$t_display->getDisplayValue($vo_result, $vn_placement_id, array_merge(array('request' => $this->request), is_array($va_info['settings']) ? $va_info['settings'] : array()))."</td>";
+						print "<td style='vertical-align: top'>".$t_display->getDisplayValue($vo_result, $vn_placement_id, array_merge(array('request' => $this->request), is_array($va_info['settings']) ? $va_info['settings'] : array()))."</td>";
 					}
 ?>	
 				</tr>
