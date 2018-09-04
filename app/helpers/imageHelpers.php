@@ -57,7 +57,7 @@
 			while($try < 10)
 			{
 				if (!$vo_http_response->isError()){
-					return '<img width:"150px" height="150px" src="data:image/jpeg;base64,'.base64_encode($thumb).'">';
+					return '<img style="max-width: 200px; max-height: 350px" src="data:image/jpeg;base64,'.base64_encode($thumb).'">';
 					break;
 				} else {
                    //retry
