@@ -71,7 +71,7 @@
 			$vn_object_id = $vo_result->get('ca_objects.object_id');		
 ?>
 			<div class="row">
-			<table>
+			<table cellpadding="10">
 			<tr>
                 <td>
                     <?php
@@ -81,7 +81,7 @@
                     $imagePids = getImagePids($t_object->get('imageUrl', array('returnAsArray' => true)));
                     if (isset($imagePids) && sizeof($imagePids) > 0){
                         $vs_base_image = getImageThumbnailBase($imagePids[0]);
-						print '<div style="width: 150px; height: 150px; overflow: hidden">'.$vs_base_image.'</div>';
+						print '<div style="overflow: hidden">'.$vs_base_image.'</div>';
                     }
                     else
                         print "<div class=\"imageTinyPlaceholder\">&nbsp;</div>";
