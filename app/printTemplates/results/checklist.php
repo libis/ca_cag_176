@@ -97,7 +97,7 @@
 							$vs_display_value = "&lt;"._t('not defined')."&gt;";
 						} 
 						
-						print "<div class='metadata'><span class='displayHeader'>".$va_display_item['display']."</span>: <span class='displayValue' >".(strlen($vs_display_value) > 1200 ? strip_tags(substr($vs_display_value, 0, 1197))."..." : $vs_display_value)."</span></div>";		
+						print "<div class='metadata'><span class='displayHeader'>".$va_display_item['display']."</span>: <span class='displayValue'>".$vs_display_value."</span></div>";
 					}							
 ?>
 					</div>				
