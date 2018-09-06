@@ -987,8 +987,7 @@ require_once(__CA_LIB_DIR__.'/core/Media/MediaInfoCoder.php');
 			$imagePids = getImagePids($t_item->get('imageUrl', array('returnAsArray' => true))); //LIBIS
 			if (sizeof($va_reps) > 0 || sizeof($imagePids) > 0) {	
 				$va_imgs = array();
-				$vs_buf .= "<div class='button' style='text-align:right;'><a href='#' id='inspectorShowMedia'>"._t("Show media")."</a> </div>
-					<div id='inspectorMedia' style='background-color:#f9f9f9; border: 1px solid #eee; margin:3px 0px -3px 0px;'>";
+				$vs_buf .= "<div id='inspectorMedia'>";
 			
 				$vn_r = $vn_primary_index = 0;
                 //libis_start
