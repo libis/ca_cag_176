@@ -20,7 +20,7 @@ span.footerText { font-family: "helvetica, sans-serif"; font-size: 12px; margin-
 .imageTiny { width: 120px; margin: 0 5px 0 0; border-radius: 5px; text-align:center;}
 .imageTinyPlaceholder { width: 120px; height: 100px; margin: 0 5px 0 0; border-radius: 5px;}
 .displayHeader { color:#666; font-weight:bold;}
-.displayValue {}
+.displayValue {text-align: justify;}
 .title {font-weight:bold; font-size: 14px; }
 .metadata {line-height:1.5em;}
 .metaBlock {  margin-top: 10px; margin-left:0px; height:auto; width:120mm; }

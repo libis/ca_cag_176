@@ -941,6 +941,7 @@ class BaseFindController extends ActionController {
  			$t_set = new ca_sets();
  			$this->view->setVar('available_sets', caExtractValuesByUserLocale($t_set->getSets(array('table' => $this->ops_tablename, 'user_id' => !(bool)$this->request->config->get('ca_sets_all_users_see_all_sets') ? $this->request->getUserID() : null, 'access' => __CA_SET_READ_ACCESS__))));
  			$this->view->setVar('available_editable_sets', caExtractValuesByUserLocale($t_set->getSets(array('table' => $this->ops_tablename, 'user_id' => !(bool)$this->request->config->get('ca_sets_all_users_see_all_sets') ? $this->request->getUserID() : null, 'access' => __CA_SET_EDIT_ACCESS__))));
+
 			$this->view->setVar('last_search', $this->opo_result_context->getSearchExpression());
  			
  			$this->view->setVar('result_context', $this->opo_result_context);
@@ -1178,6 +1179,13 @@ class BaseFindController extends ActionController {
             file_put_contents(__CA_BASE_DIR__."/tmp/header.html",print_r($vs_header, true));
 
             $msg = new AMQPMessage(json_encode($msg_body));
+            if($connection->isConnected() == false){
+                file_put_contents(__CA_BASE_DIR__."/tmp/connection.html",print_r("not connected", true)."\r\n", FILE_APPEND);
+            }
+            else
+                file_put_contents(__CA_BASE_DIR__."/tmp/connection.html",print_r("connected", true)."\r\n", FILE_APPEND);
+
+
             $channel->basic_publish($msg, '', $va_settings['queuing_pdf_queue']);
 
             $this->notification->addNotification(_t("Opdracht werd verstuurd, u zal een email ontvangen met het bestand.", __NOTIFICATION_TYPE_INFO__));

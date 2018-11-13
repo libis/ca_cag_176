@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: CollectiveAccess Providence\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-27 14:04-0400\n"
-"PO-Revision-Date: 2018-07-04 11:06+0200\n"
+"PO-Revision-Date: 2018-07-26 12:15+0200\n"
 "Last-Translator: Seth <Seth@collectiveacess.org>\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/"
 "collectiveaccess/collectiveaccess-providence/language/nl_NL/)\n"
@@ -517,7 +517,7 @@ msgstr "Zoek"
 #: app/conf/navigation.conf:2558 app/conf/navigation.conf:2624
 #: app/conf/navigation.conf:2918 app/conf/navigation.conf:2976
 msgid "Advanced search"
-msgstr ""
+msgstr "Geavanceerde zoekactie"
 
 #: app/controllers/find/SearchCollectionsController.php:112
 #: app/controllers/find/SearchEntitiesController.php:112
@@ -30832,7 +30832,7 @@ msgstr "Entiteit"
 
 #: app/conf/navigation.conf:415
 msgid "Place"
-msgstr ""
+msgstr "Plaats"
 
 #: app/conf/navigation.conf:425
 msgid "Place editor"
@@ -30840,7 +30840,7 @@ msgstr ""
 
 #: app/conf/navigation.conf:495
 msgid "Collection"
-msgstr ""
+msgstr "Collectie"
 
 #: app/conf/navigation.conf:672
 msgid "Storage location"
@@ -30873,7 +30873,7 @@ msgstr ""
 #: app/conf/navigation.conf:1981 app/conf/navigation.conf:2151
 #: app/conf/navigation.conf:2324 app/conf/navigation.conf:2500
 msgid "Basic search"
-msgstr ""
+msgstr "Basis zoekactie"
 
 #: app/conf/navigation.conf:2659
 msgid "QuickSearch"

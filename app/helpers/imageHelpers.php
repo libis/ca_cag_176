@@ -95,8 +95,8 @@
 	{
 		if (strlen($imagePid) > 0) {
 
-		        //$imageUrl = "http://resolver.libis.be/".$imagePid."?quality=CRITICAL_ARCHIVE";
-			$imageUrl = "http://resolver.libis.be/".$imagePid."/thumbnail";
+		        $imageUrl = "http://resolver.libis.be/".$imagePid."?quality=CRITICAL_ARCHIVE";
+			//$imageUrl = "http://resolver.libis.be/".$imagePid."/thumbnail";
 			
 			return $imageUrl;
 		}

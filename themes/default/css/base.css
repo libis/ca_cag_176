@@ -5644,7 +5644,7 @@ select.listRelRelationshipTypeEdit {
 
 .caItemList {
     /* margin-top: 10px; */
-    /* max-height: 500px; */
+     /*max-height: 500px; */
     overflow-y: auto;
 }
 
