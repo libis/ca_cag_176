@@ -82,7 +82,7 @@
 			);
 
             $pa_menu_bar['libisin_menu'] = array(
-				'displayName' => _t('LibisIN'),
+				'displayName' => _t('OmekaSync'),
 				'navigation' => $va_menu_items
 			);			
 
