@@ -1,6 +1,6 @@
 <?php
 /* ----------------------------------------------------------------------
- * omekaIntegrationPlugin.php : provides functionality to show a dedicatd menu for Libis Integration System
+ * omekaIntegrationPlugin.php : provides functionality to show a dedicatd menu for Ommeka synchronisation tool
  * ----------------------------------------------------------------------
  * CollectiveAccess
  * Open-source collections management software
@@ -29,7 +29,7 @@
 	class omekaIntegrationPlugin extends BaseApplicationPlugin {
 		# -------------------------------------------------------
 		public function __construct($ps_plugin_path) {
-			$this->description = _t('Shows a list of operations provided by the Libis INtegration system - LibIN');
+			$this->description = _t('Shows a list of operations provided by the OmekaSync');
 			parent::__construct();
 		}
 		# -------------------------------------------------------
@@ -81,7 +81,7 @@
 				)
 			);
 
-            $pa_menu_bar['libisin_menu'] = array(
+            $pa_menu_bar['omekasync_menu'] = array(
 				'displayName' => _t('OmekaSync'),
 				'navigation' => $va_menu_items
 			);			
@@ -94,9 +94,9 @@
 		 */
 		static public function getRoleActionList() {
             return array(
-                'can_use_libisin_plugin' => array(
-                    'label' => _t('Can use Libisin plugin'),
-                    'description' => _t('User can use Libisin functionality.')
+                'can_use_omekasync_plugin' => array(
+                    'label' => _t('Can use OmekaSync plugin'),
+                    'description' => _t('User can use OmekaSync plugin functionality.')
                 )
             );
 		}

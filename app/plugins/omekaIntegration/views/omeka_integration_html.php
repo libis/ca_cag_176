@@ -1,6 +1,5 @@
 <?php
-    print _t("<h1>Libis Integration System - LibisIN</h1>\n");
-    print _t("<h2>Omeka Integration</h2>\n");
+    print _t("<h1>Omeka Sync</h1>\n");
 
     $root_dir_url = $_SERVER['HTTP_HOST'].$this->request->getBaseUrlPath();
 ?>
