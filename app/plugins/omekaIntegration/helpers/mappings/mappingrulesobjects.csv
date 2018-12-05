@@ -9,9 +9,10 @@ SPLITTOONE,Gerelateerd nummer,$,items::object:Gerelateerd nummer
 SPLITTOONE,dc:maker,;,items::dc:Creator
 SPLIT,dc:spatial coverage,[,items::dc:Spatial coverage
 COPY,dc:datum,items::dc:Date
-COPY,ca_objects.digitoolUrl,items::object:digitoolurl
+SPLITTOONE,ca_objects.imageUrl,;,items::object:digitoolurl
+SPLITTOONE,ca_objects.external_link,;,items::object:Website
 COPY,ca_objects.creativecommons,items::dc:License
-SPLITTOONE,dc:references,;,items::dc:References
+SPLITTOONE,dc:references,$,items::dc:References
 COPY,ca_places.georeference,items::geolocation:address
 COPY,ca:tags,items::tags
 PUT,true,items::featured

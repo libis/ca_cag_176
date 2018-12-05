@@ -152,7 +152,7 @@ function getDisplays($display_name){
     /* list of elements that need returnAsArray flag true */
     $asarray_template_elements_list = array(
         'ca_objects.digitoolUrl', 'ca_entities.digitoolUrl', 'ca_collections.digitoolUrl', 'ca_occurrences.digitoolUrl',
-        'ca_entities.georeference', 'ca_objects.georeference', 'ca_places.georeference'
+        //'ca_entities.georeference', 'ca_objects.georeference', 'ca_places.georeference'
     );
 
     $libisin_displays = array();
@@ -266,11 +266,12 @@ function getDisplays($display_name){
              * for ca_objects.georeference we return coordinates and
              * return as array (already specified in $asarray_template_elements_list)
             */
+/*
             if($template_key === 'ca_objects.georeference' || $template_key == 'ca_places.georeference')
                 $template_values['coordinates'] = true;
-
+*/
             $temp_key = array_pop(explode(".",$template_key));
-            $template_key_type = $t_element->_getElementDatatype($temp_key);
+            $template_key_type = $t_element->getElementDatatype($temp_key);
 
             /*
              * By default convertCodesToDisplayText is false. However for 'list items' it should be true, therefore

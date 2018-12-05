@@ -1,6 +1,5 @@
 <?php
     print _t("<h1>OmekaSync</h1>\n");
-
     $root_dir_url = $_SERVER['HTTP_HOST'].$this->request->getBaseUrlPath();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
