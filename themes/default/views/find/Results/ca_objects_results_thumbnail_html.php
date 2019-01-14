@@ -26,11 +26,12 @@
  *
  * ----------------------------------------------------------------------
  */
-    require_once(__CA_APP_DIR__."/helpers/imageHelpers.php");
-	$vo_result 				= $this->getVar('result');
+require_once(__CA_APP_DIR__."/helpers/imageHelpers.php");
+
+	$vo_result 			= $this->getVar('result');
 	$vn_items_per_page 		= $this->getVar('current_items_per_page');
 	$vs_current_sort 		= $this->getVar('current_sort');
-	$vo_ar					= $this->getVar('access_restrictions');
+	$vo_ar				= $this->getVar('access_restrictions');
 	$vs_image_name 			= $this->request->config->get('no_image_icon');
 	$vb_hide_children		= $this->getVar('hide_children');
 
@@ -50,19 +51,9 @@
 			if (!$vn_col) { 
 				print "<tr>";
 			}
-			if (!($vs_idno = $vo_result->get('ca_objects.idno'))) {
-				$vs_idno = "???";
-			}
 			#$vs_caption = $vo_result->getWithTemplate($vs_caption_template);
-			
-			$va_labels = $vo_result->getDisplayLabels($this->request);
-			
-			$vs_caption = "";
-			foreach($va_labels as $vs_label){
-				$vs_label = "<br/>".((unicode_strlen($vs_label) > 27) ? strip_tags(mb_substr($vs_label, 0, 25, 'utf-8'))."..." : $vs_label);
-				$vs_caption .= $vs_label;
-			}
-            // libis_start
+
+	    // libis_start
             require_once(__CA_MODELS_DIR__.'/ca_objects.php');
             $t_object = new ca_objects();
             $t_object->load($vn_object_id);
@@ -74,6 +65,7 @@
             $vn_padding_top = 0;
             $vn_padding_top_bottom =  0;
             //LIBIS end
+			
 			# --- get the height of the image so can calculate padding needed to center vertically
 			#$va_media_info = $vo_result->getMediaInfo('ca_object_representations.media', 'preview170');
 			#$va_tmp = $vo_result->getMediaTags('ca_object_representations.media', 'preview170');
@@ -87,26 +79,20 @@
 			#	$vn_padding_top = 0;
 			#	$vn_padding_top_bottom =  ((180 - $va_media_info["HEIGHT"]) / 2);
 			#}
-            print "<td align='center' valign='top' style='padding:20px 2px 2px 2px;'><div class='objectThumbnailsImageContainer' style='padding: ".$vn_padding_top_bottom."px 0px ".$vn_padding_top_bottom."px 0px;'>";
-            print $va_media_info; // libis
+
 ?>
-<!--
+
 			<td align="center" valign="top" style="padding:2px 2px 2px 2px;">
 				<div class="objectThumbnailsImageContainer" style="padding: <?php print $vn_padding_top_bottom; ?>px 0px <?php print $vn_padding_top_bottom; ?>px 0px;"> 
+					<?php print $va_media_info; //LIBIS ?>
 					<input type="checkbox" name="add_to_set_ids" value="<?php print (int)$vn_object_id; ?>" class="addItemToSetControl addItemToSetControlInThumbnails"/>		
 					<?php print caEditorLink($this->request, array_shift($va_tmp), 'qlButtonEditorLink', 'ca_objects', $vn_object_id, array(), array('data-id' => $vn_object_id)); ?>
 					<?php if ($vb_has_image) { ?><div class="qlButtonContainerThumbnail" id="ql_<?php print $vn_object_id; ?>"><a class='qlButton' data-id="<?php print $vn_object_id; ?>"><?php print _t("Quick Look"); ?></a></div><?php } ?>
 				</div>
 				<div class="thumbCaption"><?php print $vs_caption; ?><br/><?php print caEditorLink($this->request, $vs_idno, '', 'ca_objects', $vn_object_id); ?></div>
 			</td>
--->
+
 <?php
-            $va_tmp = $vo_result->getMediaTags('ca_object_representations.media', 'preview170');
-			print caEditorLink($this->request, array_shift($va_tmp), '', 'ca_objects', $vn_object_id, array(), array('onmouseover' => 'jQuery(".qlButtonContainerThumbnail").css("display", "none"); jQuery("#ql_'.$vn_object_id.'").css("display", "block");', 'onmouseout' => 'jQuery(".qlButtonContainerThumbnail").css("display", "none");'));
-			print "<div class='qlButtonContainerThumbnail' id='ql_".$vn_object_id."' onmouseover='jQuery(\"#ql_".$vn_object_id."\").css(\"display\", \"block\");'><a class='qlButton' onclick='caMediaPanel.showPanel(\"".caNavUrl($this->request, 'find', 'SearchObjects', 'QuickLook', array('object_id' => $vn_object_id))."\"); return false;' >"._t("Quick Look")."</a></div>";
-			print "</div><div class='thumbCaption' ".$vs_caption;
-			print "<br/>".caEditorLink($this->request, $vs_idno, '', 'ca_objects', $vn_object_id, array())."\n";
-			print "</div></td>";
 			$vn_col++;
 			if($vn_col == $vn_display_cols){
 				print "</tr>";
@@ -114,7 +100,6 @@
 			}
 			
 			$vn_item_count++;
-			$va_media_info = "";
 		}
 		if($vn_col > 0){
 			while($vn_col < $vn_display_cols){
